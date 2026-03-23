@@ -4,7 +4,7 @@
 //  usa siempre este módulo.
 // ============================================================
 import { STORAGE_PROVIDER, SUPABASE_STORAGE, CLOUDINARY_CONFIG } from "../../config/storage.config.js";
-import { supabase } from "./supabase.js";
+import { supabase } from "../supabase.js";
 import { SITE_CONFIG } from "../../config/site.config.js";
 
 const MAX_BYTES = SITE_CONFIG.maxFileSizeMB * 1024 * 1024;
