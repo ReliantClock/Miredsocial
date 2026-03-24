@@ -228,32 +228,48 @@ input, textarea, select {
 .btn-icon-primary:hover { background: var(--brand-dark); }
 .btn-icon-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ── Session Chip ────────────────────────────────────────── */
-.session-chip-wrapper { position: relative; }
-.session-chip {
+/* ── Session Chip (avatar clicable → perfil) ─────────────── */
+.avatar-chip {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 10px 5px 5px;
+  padding: 4px 10px 4px 4px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
-  transition: border-color var(--transition), box-shadow var(--transition);
   cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  text-decoration: none;
+  color: var(--text-primary);
 }
-.session-chip:hover { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-light); }
+.avatar-chip:hover {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-light);
+  text-decoration: none;
+}
 .chip-alias {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-primary);
-  max-width: 120px;
+  max-width: 110px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.chevron-up { transform: rotate(180deg); transition: transform var(--transition); }
+
+/* ── Chevron button (abre dropdown) ──────────────────────── */
+.chevron-btn {
+  width: 30px; height: 30px;
+  border-radius: var(--radius-sm);
+  display: grid; place-items: center;
+  color: var(--text-secondary);
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+  flex-shrink: 0;
+}
+.chevron-btn:hover { background: var(--surface-3); color: var(--text-primary); }
+.chevron-btn-open { transform: rotate(180deg); color: var(--brand); }
 
 /* ── Dropdown ────────────────────────────────────────────── */
+.dropdown-wrapper { position: relative; }
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
@@ -264,7 +280,7 @@ input, textarea, select {
   min-width: 200px;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-  z-index: 200;
+  z-index: 500;
   animation: dropIn 120ms ease;
 }
 @keyframes dropIn {
@@ -272,8 +288,8 @@ input, textarea, select {
   to   { opacity: 1; transform: translateY(0); }
 }
 .dropdown-header { padding: 12px 16px; }
-.dropdown-alias { font-weight: 700; font-size: 0.9rem; }
-.dropdown-role { font-size: 0.75rem; color: var(--text-muted); }
+.dropdown-alias  { font-weight: 700; font-size: 0.9rem; }
+.dropdown-role   { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
 .dropdown-divider { height: 1px; background: var(--border); }
 .dropdown-item {
   display: flex;
@@ -285,9 +301,14 @@ input, textarea, select {
   text-decoration: none;
   transition: background var(--transition);
   width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 .dropdown-item:hover { background: var(--surface-3); color: var(--text-primary); text-decoration: none; }
-.dropdown-item-admin { color: var(--brand) !important; }
+.dropdown-item-admin  { color: var(--brand) !important; }
 .dropdown-item-danger { color: var(--danger) !important; }
 .dropdown-item-danger:hover { background: var(--danger-light) !important; }
 
@@ -329,8 +350,31 @@ input, textarea, select {
   display: grid; place-items: center;
 }
 
-/* ── Auth buttons in header ──────────────────────────────── */
-.auth-buttons { display: flex; gap: 8px; }
+/* ── Auth buttons in header (pequeños) ───────────────────── */
+.auth-buttons { display: flex; gap: 6px; align-items: center; }
+.btn-ghost-sm {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  background: none;
+  transition: background var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+.btn-ghost-sm:hover { background: var(--surface-3); color: var(--text-primary); text-decoration: none; }
+.btn-solid-sm {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  background: var(--brand);
+  transition: background var(--transition);
+  white-space: nowrap;
+}
+.btn-solid-sm:hover { background: var(--brand-dark); text-decoration: none; }
 
 /* ── Mobile nav ──────────────────────────────────────────── */
 .mobile-menu-btn { display: none; }
@@ -938,6 +982,51 @@ input, textarea, select {
   margin-bottom: 16px;
 }
 .create-user-form h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+
+/* ── Settings Page ───────────────────────────────────────── */
+.settings-page { max-width: 720px; }
+.settings-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 640px) {
+  .settings-grid { grid-template-columns: 1fr; }
+}
+.settings-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.settings-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brand);
+}
+.settings-card-header h2 { font-size: 1rem; font-weight: 700; }
+.settings-hint { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+.info-value { font-size: 0.875rem; color: var(--text-primary); text-align: right; word-break: break-all; }
 
 /* ── Empty state ─────────────────────────────────────────── */
 .empty-state {
